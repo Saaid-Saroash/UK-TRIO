@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="UK TRIO – Delicious home-delivered food. Order now via WhatsApp!">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="UK TRIO – Delicious food delivered to your home via WhatsApp." />
   <title>UK TRIO</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <!-- AOS CSS for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
   <style>
-    /* Color Theme */
+    /* Advanced Colour Theme for UK TRIO */
     :root {
-      --primary-color: #d32f2f;
+      --primary-color: #d32f2f;     /* Warm red */
       --primary-dark: #9a0007;
-      --secondary-color: #424242;
-      --accent-color: #ff8a80;
+      --secondary-color: #424242;   /* Dark grey */
+      --accent-color: #ff8a80;      /* Light coral */
       --text-color: #212121;
       --light-bg: #fafafa;
       --white: #fff;
+      --transition-duration: 0.3s;
     }
     body {
       font-family: 'Open Sans', sans-serif;
       background: var(--light-bg);
       color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background var(--transition-duration), color var(--transition-duration);
+      scroll-behavior: smooth;
     }
-    h1, h2, h3 {
+    h1, h2, h3, .section-heading {
       font-family: 'Playfair Display', serif;
+      text-transform: uppercase;
+      font-weight: 700;
       color: var(--secondary-color);
     }
-
-    /* Navbar */
+    /* Sticky Navbar */
     .top-bar {
       background: var(--white);
       border-bottom: 1px solid #ddd;
@@ -43,14 +54,37 @@
       z-index: 100;
       padding: 10px 0;
     }
+    .top-bar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--primary-color);
+    }
+    .navbar {
+      padding: 0 15px;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
     .navbar-brand img {
       height: 50px;
       width: 50px;
       margin-right: 10px;
       border-radius: 50%;
+      object-fit: cover;
     }
-
-    /* Hero Section */
+    .navbar-dark .navbar-nav .nav-link.active,
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+    /* Hero Section with Parallax Background */
     .hero {
       background: url('hero.webp') no-repeat center center fixed;
       background-size: cover;
@@ -58,11 +92,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      color: var(--white);
       position: relative;
+      color: var(--white);
+      text-align: center;
+      padding: 20px;
     }
-    .hero::before {
+    .hero::after {
       content: "";
       position: absolute;
       top: 0;
@@ -70,114 +105,723 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
     }
     .hero .container {
       position: relative;
-      padding: 30px;
-      border-radius: 10px;
+      z-index: 2;
     }
     .hero h1 {
       font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
     }
-
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    .hero .btn {
+      background: var(--primary-color);
+      border: none;
+      color: var(--white);
+      padding: 12px 30px;
+      transition: background var(--transition-duration);
+    }
+    .hero .btn:hover {
+      background: var(--primary-dark);
+    }
     /* Sections */
     .section {
       padding: 60px 15px;
     }
-
-    /* About Us - Logo Beside Text */
-    .about-container {
+    #products {
+      padding: 60px 15px;
+    }
+    #products h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      color: var(--primary-color);
+    }
+    #product-filter {
+      max-width: 400px;
+      margin: 0 auto 30px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .products {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-wrap: wrap;
       gap: 20px;
+      justify-content: center;
     }
-    .about-logo {
-      height: 80px;
+    .product-card {
+      background: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      width: 280px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
     }
-
-    /* Contact Section */
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .card-content {
+      text-align: center;
+    }
+    .card-content h4 {
+      margin-bottom: 10px;
+      color: var(--secondary-color);
+    }
+    .price {
+      color: var(--primary-color);
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .product-card button {
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      font-size: 0.9em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background var(--transition-duration);
+      margin: 5px;
+    }
+    .product-card button:hover {
+      background: var(--primary-dark);
+    }
+    /* Contact Section with Image */
     #contact {
       background: var(--secondary-color);
       color: var(--white);
-      text-align: center;
+      padding: 60px 15px;
     }
-    .contact-image {
-      max-width: 60%;
-      height: auto;
+    #contact h2 {
+      color: var(--white);
+    }
+    #contact .form-control {
+      border-radius: 5px;
+    }
+    #contact .contact-image {
+      max-width: 100%;
       border-radius: 8px;
-      margin-top: 20px;
-    }
-    .contact-button {
       margin-bottom: 20px;
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-content {
+      background: var(--white);
+      margin: 5% auto;
+      padding: 20px;
+      max-width: 800px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      animation: slideDown 0.5s;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: var(--secondary-color);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close-btn:hover {
+      color: var(--accent-color);
+    }
+    /* Product Detail Modal */
+    #product-detail-modal .modal-content {
+      max-width: 800px;
+      padding: 20px;
+    }
+    #product-detail-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #detail-image {
+      flex: 1;
+      max-width: 45%;
+      padding: 10px;
+    }
+    #detail-image img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    #detail-info {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #detail-info h3 {
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+    }
+    #detail-info p {
+      margin-bottom: 10px;
+    }
+    #detail-info .price {
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-weight: bold;
+      font-size: 1.4em;
+    }
+    #detail-info .info-bottom {
+      text-align: right;
+    }
+    #detail-info .info-bottom button {
+      margin-left: 10px;
+    }
+    /* Notification */
+    #notification {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: var(--white);
+      padding: 15px 30px;
+      border-radius: 5px;
+      font-size: 1.2em;
+      z-index: 3000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #notification.show {
+      opacity: 1;
+    }
+    /* Scroll-to-Top Button */
+    #scrollToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--accent-color);
+      color: var(--white);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #scrollToTop:hover {
+      background: var(--primary-dark);
+    }
+    .footer-links a {
+      color: var(--accent-color);
+    }
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 0.95rem;
+      }
+      .container {
+        padding: 0 15px;
+      }
+      #contact .row {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-links a {
+        font-size: 1.2rem;
+      }
+      #product-detail-container {
+        flex-direction: column;
+      }
+      #detail-image, #detail-info {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
-
 <body>
-
-  <!-- Navbar -->
+  <!-- Top Bar -->
   <div class="top-bar">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--secondary-color);">
       <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="logo.webp" alt="UK TRIO Logo"> UK TRIO
+        <a class="navbar-brand" href="#home">
+          <!-- Local logo image -->
+          <img src="logo.webp" alt="UK TRIO Logo" />
+          UK TRIO
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#products">Menu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About Us</a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="#" id="cart-link">
+                Cart (<span id="cart-count">0</span>)
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </div>
 
   <!-- Hero Section -->
-  <header class="hero">
+  <header id="home" class="hero">
     <div class="container">
       <h1>UK TRIO</h1>
-      <p>Delicious food delivered to your doorstep.</p>
-      <a href="#products" class="btn btn-danger btn-lg">View Menu</a>
+      <p>Delicious food delivered right to your doorstep.</p>
+      <a href="#products" class="btn">View Menu</a>
     </div>
   </header>
 
-  <!-- About Us -->
-  <section id="about" class="section text-center">
-    <div class="container about-container">
-      <img src="logo.webp" alt="UK TRIO Logo" class="about-logo">
-      <div>
-        <h2>About Us</h2>
-        <p>We offer freshly prepared food with fast home delivery. Order now via WhatsApp!</p>
-      </div>
+  <!-- About Section -->
+  <section id="about" class="section" data-aos="fade-right">
+    <div class="container text-center">
+      <h2 class="section-heading">About UK TRIO</h2>
+      <p>
+        At UK TRIO, we offer a variety of freshly prepared food items delivered right to your home. Our focus is on quality and taste, ensuring you enjoy every bite of our delicious offerings.
+      </p>
     </div>
   </section>
 
-  <!-- Products -->
-  <section id="products" class="section">
-    <div class="container text-center">
+  <!-- Products Section -->
+  <section id="products" data-aos="fade-up">
+    <div class="container">
       <h2>Our Menu</h2>
-      <div class="row">
-        <div class="col-md-3"><img src="pizza bread.webp" alt="Pizza Bread" class="img-fluid"><p>Pizza Bread</p></div>
-        <div class="col-md-3"><img src="garlic bread.webp" alt="Garlic Bread" class="img-fluid"><p>Garlic Bread</p></div>
-        <div class="col-md-3"><img src="tang.webp" alt="Tang" class="img-fluid"><p>Tang</p></div>
-        <div class="col-md-3"><img src="lemonade.webp" alt="Lemonade" class="img-fluid"><p>Lemonade</p></div>
-      </div>
+      <input type="text" id="product-filter" placeholder="Search Products..." aria-label="Product Search" />
+      <div id="product-container" class="products"></div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="section">
+  <section id="contact" data-aos="fade-up">
     <div class="container">
-      <h2>Contact Us</h2>
-      <div class="contact-button">
-        <a href="https://wa.me/923312497159" class="btn btn-success btn-lg"><i class="fab fa-whatsapp"></i> Contact Us on WhatsApp</a>
+      <div class="row text-center mb-5">
+        <div class="col">
+          <h2 class="section-heading">Contact Us</h2>
+          <p>Have questions or want to place a custom order? Get in touch via WhatsApp!</p>
+        </div>
       </div>
-      <img src="contact.webp" alt="Contact Us" class="contact-image">
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Local contact image -->
+          <img src="contact.webp" alt="Contact Us" class="contact-image">
+        </div>
+        <div class="col-md-6">
+          <div class="d-grid">
+            <a href="https://wa.me/923312497159" target="_blank" class="btn btn-primary btn-lg">
+              <i class="fab fa-whatsapp"></i> Contact Us on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Order Form Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-order" aria-label="Close Order" onclick="document.getElementById('order-modal').style.display='none'">&times;</span>
+      <h2>Complete Your Order</h2>
+      <form id="order-form">
+        <div class="mb-3">
+          <label for="order-name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="order-name" placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+          <label for="order-contact" class="form-label">Contact No.</label>
+          <input type="text" class="form-control" id="order-contact" placeholder="Your Contact Number" required>
+        </div>
+        <div class="mb-3">
+          <label for="order-address" class="form-label">Address</label>
+          <textarea class="form-control" id="order-address" rows="3" placeholder="Your Address" required></textarea>
+        </div>
+        <div class="mb-3">
+          <p class="fw-bold">Your order will be sent via WhatsApp to +923312497159</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-cart" aria-label="Close Cart" onclick="document.getElementById('cart-modal').style.display='none'">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+      <button id="place-order" class="btn btn-primary mt-3">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div id="product-detail-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-detail" aria-label="Close Details" onclick="document.getElementById('product-detail-modal').style.display='none'">&times;</span>
+      <div id="product-detail-container">
+        <div id="detail-image">
+          <img id="detail-img" src="pizza bread.webp" alt="Product Detail" class="img-fluid">
+        </div>
+        <div id="detail-info">
+          <h3 id="detail-title"></h3>
+          <p id="detail-specs"></p>
+          <p class="price" id="detail-price"></p>
+          <div class="info-bottom">
+            <button id="detail-add-cart" class="btn btn-secondary">Add to Cart</button>
+            <button id="detail-buy-now" class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scrollToTop" aria-label="Scroll to Top">&#8679;</button>
+
+  <!-- Notification Element -->
+  <div id="notification"></div>
+
   <!-- Footer -->
-  <footer class="bg-dark text-light text-center py-3">
-    <p>&copy; 2025 UK TRIO. All rights reserved.</p>
+  <footer class="bg-secondary text-light py-3">
+    <div class="container text-center">
+      <div class="footer-links d-flex justify-content-center gap-3 mb-2">
+        <a href="https://wa.me/923312497159" target="_blank" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp fa-lg"></i>
+        </a>
+      </div>
+      <p class="mb-0">&copy; 2025 UK TRIO. All rights reserved.</p>
+    </div>
   </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <!-- AOS JS for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    /* Define Products for UK TRIO with local image references */
+    const products = [
+      {
+        id: 1,
+        title: "Pizza Bread",
+        specs: "Delicious, oven-baked pizza bread loaded with cheese and tomato sauce.",
+        price: "0",
+        images: ["pizza bread.webp"]
+      },
+      {
+        id: 2,
+        title: "Garlic Bread",
+        specs: "Crispy garlic bread brushed with herb-infused butter.",
+        price: "0",
+        images: ["garlic bread.webp"]
+      },
+      {
+        id: 3,
+        title: "Tang",
+        specs: "Refreshing Tang drink, perfect for a quick pick-me-up.",
+        price: "0",
+        images: ["tang.webp"]
+      },
+      {
+        id: 4,
+        title: "Lemonade",
+        specs: "Zesty and cool lemonade made with fresh lemons.",
+        price: "0",
+        images: ["lemonade.webp"]
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function showNotification(message) {
+      const notification = document.getElementById("notification");
+      notification.textContent = message;
+      notification.style.display = "block";
+      notification.classList.add("show");
+      setTimeout(() => {
+        notification.classList.remove("show");
+        setTimeout(() => (notification.style.display = "none"), 300);
+      }, 2000);
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      showNotification("Added to cart!");
+    }
+
+    // orderNow function for immediate purchase from detail view
+    function orderNow(productId) {
+      const product = products.find(p => p.id === productId);
+      cart = [{ ...product, quantity: 1 }];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      // Hide any open modals and show order form modal
+      document.getElementById("cart-modal").style.display = "none";
+      document.getElementById("product-detail-modal").style.display = "none";
+      document.getElementById("order-modal").style.display = "block";
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById("cart-count").innerText = count;
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      // Clicking on the card (except buttons) shows product detail modal
+      card.addEventListener("click", function (e) {
+        if (e.target.tagName !== "BUTTON") {
+          showProductDetail(product.id);
+        }
+      });
+      card.innerHTML = `
+        <div class="card-content">
+          <img src="${product.images[0]}" alt="${product.title}" class="img-fluid mb-3" style="border-radius: 5px;">
+          <h4>${product.title}</h4>
+          <p class="price">PKR ${product.price}</p>
+          <button onclick="addToCart(${product.id}); event.stopPropagation();">Add to Cart</button>
+          <button onclick="orderNow(${product.id}); event.stopPropagation();">Buy Now</button>
+        </div>
+      `;
+      return card;
+    }
+
+    function displayProducts(filteredProducts = products) {
+      const container = document.getElementById("product-container");
+      container.innerHTML = "";
+      filteredProducts.forEach(product => {
+        container.appendChild(createProductCard(product));
+      });
+    }
+
+    function displayCart() {
+      const cartContainer = document.getElementById("cart-items");
+      cartContainer.innerHTML = "";
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item mb-3 p-2 border rounded";
+        itemDiv.innerHTML = `
+          <div class="cart-details">
+            <strong>${item.title}</strong><br>
+            <small>${item.specs}</small><br>
+            <span>Price: PKR ${item.price}</span><br>
+            <span>Quantity: ${item.quantity}</span>
+          </div>
+          <div class="cart-actions mt-2">
+            <button onclick="decreaseQuantity(${item.id})" class="btn btn-sm btn-secondary">-</button>
+            <button onclick="increaseQuantity(${item.id})" class="btn btn-sm btn-secondary">+</button>
+            <button onclick="removeFromCart(${index})" class="btn btn-sm btn-danger">Remove</button>
+          </div>
+        `;
+        cartContainer.appendChild(itemDiv);
+      });
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
+      const totalDiv = document.createElement("div");
+      totalDiv.className = "mt-3 fw-bold";
+      totalDiv.innerText = "Order Total: PKR " + total;
+      cartContainer.appendChild(totalDiv);
+      const clearBtn = document.createElement("button");
+      clearBtn.innerText = "Clear Cart";
+      clearBtn.className = "btn btn-warning mt-3";
+      clearBtn.onclick = function() {
+        cart = [];
+        localStorage.removeItem("cart");
+        updateCartCount();
+        displayCart();
+      };
+      cartContainer.appendChild(clearBtn);
+    }
+
+    function increaseQuantity(productId) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+      }
+    }
+
+    function decreaseQuantity(productId) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        } else {
+          cart = cart.filter(i => i.id !== productId);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+      }
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      displayCart();
+    }
+
+    // Show the cart modal when the cart link is clicked
+    document.getElementById("cart-link").addEventListener("click", function (e) {
+      e.preventDefault();
+      displayCart();
+      document.getElementById("cart-modal").style.display = "block";
+    });
+
+    // Handle product filter
+    document.getElementById("product-filter").addEventListener("input", function (e) {
+      const query = e.target.value.toLowerCase();
+      const filtered = products.filter(p =>
+        p.title.toLowerCase().includes(query) || p.specs.toLowerCase().includes(query)
+      );
+      displayProducts(filtered);
+    });
+
+    // Scroll-to-Top Button
+    const scrollBtn = document.getElementById("scrollToTop");
+    window.addEventListener("scroll", () => {
+      scrollBtn.style.display =
+        document.documentElement.scrollTop > 300 ? "block" : "none";
+    });
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Display products and update cart count on page load
+    displayProducts();
+    updateCartCount();
+
+    // When "Place Order" is clicked in the cart modal, hide the cart modal and show the order form modal
+    document.getElementById("place-order").addEventListener("click", function () {
+      if (cart.length === 0) {
+        showNotification("Your cart is empty!");
+        return;
+      }
+      document.getElementById("cart-modal").style.display = "none";
+      document.getElementById("order-modal").style.display = "block";
+    });
+
+    // Close order modal
+    document.getElementById("close-order").addEventListener("click", function () {
+      document.getElementById("order-modal").style.display = "none";
+    });
+
+    // Handle order form submission (orders will be sent via WhatsApp)
+    document.getElementById("order-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("order-name").value;
+      const contact = document.getElementById("order-contact").value;
+      const address = document.getElementById("order-address").value;
+
+      let orderDetails = `New Order Received:%0A%0ACustomer: ${name}%0AContact: ${contact}%0AAddress: ${address}%0A%0AOrder Details:%0A`;
+      cart.forEach((item, i) => {
+        orderDetails += `${i + 1}. ${item.title} - PKR ${item.price} x ${item.quantity} = PKR ${parseFloat(item.price) * item.quantity}%0ADetails: ${item.specs}%0A%0A`;
+      });
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
+      orderDetails += `Order Total: PKR ${total}`;
+
+      // Clear the cart after order submission
+      cart = [];
+      localStorage.removeItem("cart");
+      updateCartCount();
+      document.getElementById("order-modal").style.display = "none";
+      
+      // Redirect to WhatsApp
+      const waLink = `https://wa.me/923312497159?text=${encodeURIComponent(orderDetails)}`;
+      window.location.href = waLink;
+    });
+
+    // Notification utility
+    function showNotification(message) {
+      const notification = document.getElementById("notification");
+      notification.textContent = message;
+      notification.style.display = "block";
+      notification.classList.add("show");
+      setTimeout(() => {
+        notification.classList.remove("show");
+        setTimeout(() => (notification.style.display = "none"), 300);
+      }, 2000);
+    }
+
+    // Product Detail Modal logic
+    function showProductDetail(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      // Populate modal with product data
+      document.getElementById("detail-img").src = product.images[0];
+      document.getElementById("detail-title").innerText = product.title;
+      document.getElementById("detail-specs").innerText = product.specs;
+      document.getElementById("detail-price").innerText = "PKR " + product.price;
+      // Set actions for the modal buttons
+      document.getElementById("detail-add-cart").onclick = function() {
+        addToCart(product.id);
+        document.getElementById("product-detail-modal").style.display = "none";
+      };
+      document.getElementById("detail-buy-now").onclick = function() {
+        orderNow(product.id);
+      };
+      // Show the modal
+      document.getElementById("product-detail-modal").style.display = "block";
+    }
+
+    document.getElementById("close-detail").addEventListener("click", function () {
+      document.getElementById("product-detail-modal").style.display = "none";
+    });
+  </script>
 </body>
 </html>
